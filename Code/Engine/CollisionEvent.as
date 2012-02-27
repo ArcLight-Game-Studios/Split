@@ -7,7 +7,7 @@
 //
 // APPLICATION:		Split
 // CREATION DATE:	18/02/12
-// LAST ACCESSED:	20/02/12
+// LAST ACCESSED:	27/02/12
 // HIERARCHY:		Code.Engine.CollisionEvent
 //
 //***********************************************
@@ -23,12 +23,13 @@ package Code.Engine {
 		// PROPERTIES
 		//=========================
 		public var objectBounds:Rectangle;
+		public static const COLLISION_DETECTED:String = "collisionDetected";
 
 
 		//=========================
 		// CONSTRUCTOR
 		//=========================
-		public function CollisionEvent(objectBounds:Rectangle,type:String,bubbles:Boolean=false,cancelable:Boolean=false) {
+		public function CollisionEvent(objectBounds:Rectangle, type:String, bubbles:Boolean=false, cancelable:Boolean=false) {
 			super(type,bubbles,cancelable);
 			this.objectBounds=objectBounds;
 		}
