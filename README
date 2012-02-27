@@ -1,0 +1,5 @@
+2nd build now up!
+
+Fixed problems with player movement and collision, if you notice anything else make a note of telling me.
+Created a simple level with platforms. 
+Next steps: implement a timer and a goal.
