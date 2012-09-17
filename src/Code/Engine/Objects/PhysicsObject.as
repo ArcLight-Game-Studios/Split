@@ -32,7 +32,6 @@ package Code.Engine.Objects
 		protected var xAcceleration:int = 2;
 		/* Y-Axis Movement */
 		protected var yVelocity:int = 0;
-		protected var maxYVelocity:int = 7;
 		protected var maxNegativeYVelocity:int = -10;
 		protected var onGround:Boolean = false;
 		protected var gravityEnabled:Boolean = true;
@@ -50,7 +49,7 @@ package Code.Engine.Objects
 		{
 			addEventListener(Event.ADDED_TO_STAGE, Initialise);
 			
-			var boundGap:Number = 1;
+			var boundGap:Number = 2;
 			
 			// Standard collision bounds.
 			bottomBound = new CollisionBound(new Point(boundGap, height), new Point((width - boundGap), height));

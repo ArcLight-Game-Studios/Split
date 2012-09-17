@@ -1,8 +1,8 @@
 package Code.Levels 
 {
-	import Code.Engine.Game.Level;
 	import flash.display.MovieClip;
 	import flash.events.Event;
+	import Code.Engine.Game.Level;
 	
 	//--------------------------------------
     //  Class description
@@ -33,7 +33,7 @@ package Code.Levels
 		//--------------------------------------
 		private function Initialise(e:Event):void 
 		{
-			sandbox = new Level(new Sandbox);
+			sandbox = new Level(new Scrolling);
 			addChild(sandbox);
 			trace("Manifest initialised.");
 			removeEventListener(Event.ADDED_TO_STAGE, Initialise);			

@@ -1,10 +1,10 @@
 package Code.States
 {
-	import Code.Engine.Game.State;
 	import flash.display.MovieClip;
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import Code.Engine.Game.State;
 	import Code.States;
 	
 	//--------------------------------------
@@ -40,7 +40,7 @@ package Code.States
 			playButton = getChildByName("playButton") as PlayButton;
 			playButton.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDown);
 			
-			trace("MainMain initialised.");
+			trace("Main menu initialised.");
 			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
 		
@@ -49,7 +49,7 @@ package Code.States
 		//--------------------------------------
 		public function OnMouseDown(e:MouseEvent):void 
 		{
-			trace("playButton pressed.");
+			trace("Play button pressed.");
 			main.SwitchState(States.PLAY);
 		}
 	}

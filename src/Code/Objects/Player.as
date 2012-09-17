@@ -27,36 +27,28 @@
 		public static const PLAYER_DEATH:String = "playerDeath";
 		public var deathTrigger:Boolean = false;
 		public var isFacingRight:Boolean = true;
-		public var isJumping:Boolean = false;
+		public var jumping:Boolean = false;
 		public var ignoreKeys:Boolean = false;
 		//private const MAX_HORIZONTAL_OVERLAP:int = 4;
 		//private const MAX_VERTICAL_OVERLAP:int = 2;
-		
-		/**
-		 * @private 
-		 * */
 		private var spawn:Point;
 		
-		/**
-		 * @private 
-		 * */
 		private var currentAnimation:MovieClip = null;
-		
-		/**
-		 * @private 
-		 * */
 		private var idle:MovieClip = new PlayerIdle();
+		private var walk:MovieClip = new PlayerWalking();
+		private var jump:MovieClip = new PlayerJumping();
+		private var land:MovieClip = new PlayerLanding();
+		private var death:MovieClip;
 		
-		//private var walking:MovieClip = new PlayerWalking();
-		//private var jumping:MovieClip = new PlayerJumping();
-		//private var landing:MovieClip = new PlayerLanding();
-		//private var death:MovieClip;
-		
-		private var yPeak:int;
-		private var jumpDecay:int = 0;
-		private var jumpCooldown:int = 0;
 		private var key:Object = { 87: false , 65: false, 68: false }; // order: W, A, D
 		
+		private var jumpCooldown:int = 0;
+		private var yPeak:int = 0;
+		private var jumpBlocks:int = 5;
+		private const JUMP_COOLDOWN:int = 5;
+		private const JUMP_VELOCITY:int = 10;
+		private const BLOCK_HEIGHT:int = 10;
+
 		//--------------------------------------
 		//  Constructor
 		//--------------------------------------
@@ -78,8 +70,8 @@
 			spawn = new Point(x, y);
 			PlayAnimation(idle);
 
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, KeyDown);
-			stage.addEventListener(KeyboardEvent.KEY_UP, KeyUp);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, OnKeyDown);
+			stage.addEventListener(KeyboardEvent.KEY_UP, OnKeyUp);
 			
 			trace("Player initialised.");
 			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
@@ -90,9 +82,10 @@
 		//--------------------------------------
 		public function Update():void 
 		{
-			CheckForInput(); // Looks for WASD.
+			//trace("B "+bottomBound.hit, "T "+topBound.hit, "L "+leftBound.hit, "R "+rightBound.hit);
+			CheckForInput(); // Looks for WASD key presses and modifies x/y velocities.
 			CheckIfJumping(); // Applies jump.
-			ApplyGravity(); // Affects x/y velocities.
+			ApplyGravity(); // Modifies y velocity.
 			UpdatePosition(); // Updates x/y values.
 
 			/*
@@ -118,9 +111,9 @@
 			}*/
 		}
 
-		//=========================
-		// PUBLIC METHODS
-		//=========================
+		//--------------------------------------
+		//  Public methods
+		//--------------------------------------
 		/* When the player dies:
 		 * death animation is played and
 		 * x/y velocities are zeroed.
@@ -142,17 +135,17 @@
 		{
 			if(deathTrigger == false) 
 			{
-				//death = new PlayerDeath();
-				//PlayAnimation(death);
+				death = new PlayerDeath();
+				PlayAnimation(death);
 				xVelocity = 0;
 				yVelocity = 0;
 				deathTrigger = true;
 			}
 		}
 		
-		//=========================
-		// PRIVATE METHODS 
-		//=========================
+		//--------------------------------------
+		//  Private methods
+		//--------------------------------------
 		/* This function will not work if the player character registration
 		 * point is located other than the top left.
 		 * The override of this function allows for jumping to be reset and 
@@ -172,16 +165,17 @@
 			{
 				if (bottomBound.hit)
 				{					
-					if (!isJumping)
+					if (!jumping)
 					{
-						if (y < bottomBound.objectBounds.y)
+						// !!!!!!!!!! NEEDS TO BE CORRECTED !!!!!!!!!! (Improve accuracy of assumption.)
+						if ((y < bottomBound.objectBounds.y) && ((y+height)<(bottomBound.objectBounds.y+bottomBound.objectBounds.height)))
 						{
 
 							// Positions the player on top of the collision object.
 							y = (bottomBound.objectBounds.y - height);
 							yVelocity = 0;
 							onGround = true;
-							isJumping = false;
+							jumping = false;
 						}
 					}
 				} 
@@ -197,7 +191,7 @@
 				} 
 				
 				if (leftBound.hit)
-				{
+				{	
 					xVelocity = 0;
 					// Positions the player to the left of the collision object.
 					if (isFacingRight)
@@ -208,18 +202,17 @@
 				
 				if (topBound.hit)
 				{
-					//trace("top hit");
-					if (isJumping)
-					{
+					//if (!onGround)
+					//{
 						//if (y < (topBound.objectBounds.y + topBound.objectBounds.height))//true value
 						if ((y + height) > (topBound.objectBounds.height + topBound.objectBounds.y))
 						{
 							// Positions the player underneath the collision object.
 							y = (topBound.objectBounds.y + topBound.objectBounds.height);
 							yVelocity = 0;
-							isJumping = false;
+							jumping = false;
 						}
-					}
+					//}
 				}
 			}
 		}
@@ -230,19 +223,19 @@
 			if (onGround)
 				gravityEnabled = false;
 			
-			if ((!gravityEnabled) && (!isJumping) && (bottomBound.hit == false))
+			// In the air.
+			if ((!gravityEnabled) && (!jumping) && (bottomBound.hit == false))
 			{
 				gravityEnabled = true;
 				onGround = false;
 			}
 			
+			// Gravity enabled - increase to max y velocity.
 			if ((gravityEnabled) && (yVelocity != maxNegativeYVelocity))
 				yVelocity--;
 		}
 
-		//=========================
-		// PRIVATE METHODS
-		//=========================
+		/*
 		private function CalculateBoundOverlaps():void 
 		{
 			bottomBound.overlap = (y + height) - bottomBound.objectBounds.y;
@@ -257,7 +250,7 @@
 				leftBound.overlap = ((rightBound.objectBounds.x + rightBound.objectBounds.width) - (x - width));
 				rightBound.overlap = (x - leftBound.objectBounds.x);
 			}
-		}
+		}*/
 		
 		private function CheckForInput():void 
 		{
@@ -270,9 +263,10 @@
 				// A - LEFT
 				if (key[65] == true) 
 				{
+					rightBound.hit = false; // Temporary fix for "sticking" to the wall.
 					//FlipLeft();
-					if (xVelocity > 0) // Prevents A+D "drift" glitch.
-						xVelocity = 0;
+					if (xVelocity > 0) // Prevents A+D "drift" bug.
+						xVelocity = 0;	
 					if (xVelocity > maxNegativeXVelocity) 
 						xVelocity -= xAcceleration;
 				}
@@ -280,34 +274,27 @@
 				// D - RIGHT
 				if (key[68] == true) 
 				{
+					leftBound.hit = false; // Temporary fix for "sticking" to the wall.
 					//FlipRight();
-					if (xVelocity < 0) // Prevents A+D "drift" glitch.
+					if (xVelocity < 0) // Prevents A+D "drift" bug.
 						xVelocity = 0;
 					if (xVelocity < maxXVelocity) 
 						xVelocity += xAcceleration;	
 				}
 				
 				// If the A and D keys are not being pressed.
-				
 				if ((key[65] == false) && (key[68] == false)) 
 				{
-					// Resets x velocity.
 					xVelocity = 0;
-					// Plays idle animation if not jumping.
-					if (isJumping == false)
+					if (!jumping)
 						PlayAnimation(idle);
 				} 
 				else 
 				{
-					PlayAnimation(idle);
-					/* Plays walking animation if not jumping and x-axis collision bunds are not hit.
-					 * Otherwise, the idle animation will be played.
-					 */
-					/*
-					if ((isJumping == false) && (rightBound.hit == false) && (leftBound.hit == false))
-						PlayAnimation(walking);
+					if ((!jumping) && (rightBound.hit == false) && (leftBound.hit == false))
+						PlayAnimation(walk);
 					else 
-						PlayAnimation(idle);*/
+						PlayAnimation(idle);
 				}
 			}
 		}		
@@ -349,59 +336,45 @@
 		
 		private function CheckIfJumping():void 
 		{
-			if (isJumping) 
+			if (jumping) 
 			{
-				// If player hasn't reached the peak of the jump.
-				if (y > yPeak) 
+				if (y <= yPeak) 
 				{
-					yVelocity = 10 - jumpDecay;
-					jumpDecay++;
-					/* Reduce the y velocity until is equals 1.
-					 * This allows for a smooth jump arc.
-					 */
-					/*
-					if (yVelocity != 1) 
-					{
-						yVelocity = (maxYVelocity - jumpDecay);
-						jumpDecay++;
-					}*/
-				} 
-				else 
-				{
-					// Player is not considered jumping once the peak has been reached.
-					yVelocity = 0;
-					isJumping = false;
+					jumping = false;
 					gravityEnabled = true;
-				}
-			}
-			
-			// Reduces x velocity if player is not on the ground.
-			if (onGround == false) 
-			{
-				// Player will be falling so landing animation is played.
-				//if (isJumping == false) 
-					//PlayAnimation(landing);
-
-				xVelocity *= 0.8;
+				} 
 			}
 			else
 			{
+				if (!onGround)
+				{
+					PlayAnimation(land);
+				}
+			}
+			if (onGround)
+			{
 				if (jumpCooldown > 0)
-					jumpCooldown--;					
+				{
+					jumpCooldown--;
+				}
+			}
+			else
+			{
+				xVelocity *= 0.9;
 			}
 		}
 
 		private function Jump():void 
 		{
-			if ((!isJumping) && (onGround) && (jumpCooldown == 0)) 
+			if ((!jumping) && (onGround) && (jumpCooldown == 0)) 
 			{
-				isJumping = true;
+				jumping = true;
 				onGround = false;
 				gravityEnabled = false;
-				jumpDecay = 0;
-				jumpCooldown = 5;
-				yPeak = (y-height);
-				//PlayAnimation(jumping);
+				yVelocity = JUMP_VELOCITY;
+				jumpCooldown = JUMP_COOLDOWN;
+				yPeak = y - (BLOCK_HEIGHT * jumpBlocks);
+				PlayAnimation(jump);
 			}
 		}
 		
@@ -427,21 +400,17 @@
 			}
 		}
 
-		//=========================
-		// EVENT HANDLERS
-		//=========================
-		private function KeyDown(e:KeyboardEvent):void 
+		//--------------------------------------
+		//  Event handlers
+		//--------------------------------------
+		private function OnKeyDown(e:KeyboardEvent):void 
 		{
 			key[e.keyCode] = true;
 		}
 		
-		private function KeyUp(e:KeyboardEvent):void 
+		private function OnKeyUp(e:KeyboardEvent):void 
 		{
 			key[e.keyCode] = false;
 		}
-
-		//=========================
-		// END OF SCRIPT
-		//=========================
 	}
 }

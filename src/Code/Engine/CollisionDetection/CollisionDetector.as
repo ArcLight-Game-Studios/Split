@@ -1,12 +1,12 @@
 ﻿package Code.Engine.CollisionDetection 
 {
-	import Code.Engine.Game.Level;
-	import Code.Objects.Player;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.EventDispatcher;
 	import flash.events.Event;
 	import flash.display.DisplayObject;
+	import Code.Engine.Game.Level;
+	import Code.Objects.Player;
 	import Code.Engine.CollisionDetection.CollisionBound;
 	
 	//--------------------------------------
@@ -25,15 +25,7 @@
 		//--------------------------------------
 		//  Properties
 		//--------------------------------------
-		/**
-		 * Used for event listeners.
-		 */
 		public static const COLLISION_DETECTED:String = "collisionDetected";
-		
-		/**
-		 * @private (temporary)
-		 * Stores the number of collisions detected.
-		 */
 		private var count:int = 0;
 		
 		//--------------------------------------

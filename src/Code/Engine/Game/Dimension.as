@@ -8,6 +8,7 @@
 	import Code.Objects.Player;
 	import Code.Engine.CollisionDetection.CollisionBound;
 	import Code.Engine.CollisionDetection.CollisionDetector;
+	import Code.Engine.Game.Camera;
 
 	//--------------------------------------
     //  Class description
@@ -32,9 +33,11 @@
 		//private var hazardArray:Array = new Array();
 		private var level:MovieClip;
 		private var collisionDetector:CollisionDetector = new CollisionDetector();
-		public var type:String = "none";
-		//public var playerBounds:Array;
+		public var type:String;
 		private var dimensionContent:Dimension;
+		public var reachedGoal:Boolean = false;
+		private var goal:Goal;
+		private var camera:Camera;
 		
 		//--------------------------------------
 		//  Constructor
@@ -52,14 +55,16 @@
 			// Reference to level parent class.
 			level = parent.parent as MovieClip;
 			
+			// !!! Can possibly get rid of this by setting it in the level - keep for now (15/09/12).
 			if (type == LIGHT)
 				dimensionContent = level.lightDimension;
 			else if (type == DARK)
 				dimensionContent = level.darkDimension;
 			
-			ConfigureDimensionContent();
+			camera = new Camera(this, player);
 				
-			//addEventListener(Event.ENTER_FRAME, Update);
+			ConfigureDimensionContent();
+			
 			trace(type + " dimension initialised.");
 			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
@@ -70,7 +75,18 @@
 		public function Update():void 
 		{
 			player.Update();
+			camera.Follow(player);
 			collisionDetector.Check(player.collisionBounds, collisionArray);
+			
+			// Game logic.
+			if (player.hitTestObject(goal))
+			{
+				reachedGoal = true;
+			}
+			else
+			{
+				reachedGoal = false;
+			}
 		}
 		
 		//--------------------------------------
@@ -81,7 +97,7 @@
 		 * or standard collision array.
 		 */
 		private function ConfigureDimensionContent():void 
-		{
+		{			
 			for (var i:int = 0; i < dimensionContent.numChildren; i++) 
 			{
 				var object:Object = dimensionContent.getChildAt(i);
@@ -97,11 +113,14 @@
 					if (object is Player) 
 					{
 						player = object as Player;
-						player.removeChildAt(0); // Removes spawn placeholder.
+						player.removeChildAt(0); // Removes placeholder image.
 						player.mouseChildren = false;
 						player.mouseEnabled = false;
-						//playerBounds = new Array(player.bottomBound, player.rightBound, player.leftBound, player.topBound);
 					} 
+					else if (object is Goal)
+					{
+						goal = object as Goal;
+					}
 					else // Standard object.
 					{
 						if (object is Sprite) // Dimension border.

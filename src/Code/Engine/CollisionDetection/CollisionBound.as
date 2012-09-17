@@ -23,37 +23,14 @@
 		//--------------------------------------
 		//  Properties
 		//--------------------------------------
-		/**
-		 * How far the bound has past the collision object.
-		 */
+		private const THICKNESS:Number = 0.1;
+		private const ALPHA:Number = 1;
+		private const COLOUR:uint = 0xFF0000;
 		public var overlap:int = 0;
-		
-		/**
-		 * Determines if the bound has been hit.
-		 */
 		public var hit:Boolean = false;
-
-		/**
-		 * Stores the dimensions of the object which the bound has hit.
-		 */
 		public var objectBounds:Rectangle = new Rectangle();
-		
-		/**
-		 * @private
-		 * The visual component of the bound.
-		 */
 		private var bound:Shape = new Shape();
-		
-		/**
-		 * @private
-		 * The bounds point of origin.
-		 */
 		private var origin:Point;
-		
-		/**
-		 * @private
-		 * The bounds target point.
-		 */
 		private var target:Point;
 
 		//--------------------------------------
@@ -86,7 +63,7 @@
 		public function ChangePosition(origin:Point, target:Point):void 
 		{
 			bound.graphics.clear();
-			bound.graphics.lineStyle(1, 0xFF0000, 0);
+			bound.graphics.lineStyle(THICKNESS, COLOUR, ALPHA);
 			bound.graphics.moveTo(origin.x, origin.y);
 			bound.graphics.lineTo(target.x, target.y);
 		}

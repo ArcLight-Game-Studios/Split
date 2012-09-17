@@ -9,13 +9,9 @@ Peeter Pärna, Stefan Harrison.
 //--------------------------------------
 //  Todo list
 //--------------------------------------
-HUD (minimalistic) - count-up timer, mirror fragment count.
+Mirror fragments? If so, 2 per dimension.
 Platform types.
-Dimension - scrolling capability. 
+Modify scrolling system.
 Angry Birds level select system.
-
-
-//--------------------------------------
-//  Notes
-//--------------------------------------
-2 mirror fragments per level (one in each dimension).
+Gameover/restart screen (additional states).
+GRAPHICS!!!

@@ -3,6 +3,10 @@
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.text.TextField;
+	import flash.utils.Timer;
+	import flash.utils.getTimer;
 	import Code.Engine.Game.Dimension;
 	
 	//--------------------------------------
@@ -19,10 +23,8 @@
 		//--------------------------------------
 		//  Properties
 		//--------------------------------------
-		/* Events */
 		public static const LEVEL_LOADED:String = "levelLoaded";
 		public static const LEVEL_COMPLETE:String = "levelComplete";
-		/* Level */
 		public var darkDimension:Dimension;
 		public var lightDimension:Dimension;
 		private var levelContent:Sprite;
@@ -32,7 +34,7 @@
 		//  Constructor
 		//--------------------------------------
 		public function Level(levelContent:Sprite) 
-		{
+		{		
 			this.levelContent = levelContent;	
 			
 			// Dark dimension.
@@ -52,27 +54,35 @@
 		private function Initialise(e:Event):void 
 		{	
 			addChild(levelContent);
-			
 			addEventListener(Event.ENTER_FRAME, Run);
 			trace("Level initialised.");
 			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
 		
-		//--------------------------------------
-		//  Destructor
-		//--------------------------------------
-		public function Destroy():void 
-		{
-			/*
-			removeChild(levelContent);
-			for (var i:int = 0; i < levelContent.numChildren; i++) 
-			{
-				var object:Object = levelContent.getChildAt(i);
-				levelContent.removeChildAt(i);
-				object = null;
-			}
-			levelContent = null;
-			trace("Level destroyed");*/
+		/**
+		 * Calculates time since start of level.
+		 */
+		private function TimeElapsed():void 
+		{			
+			var timeElapsed:Number = getTimer(); // Returns milliseconds.
+			var seconds:int = Math.floor(timeElapsed / 1000);
+			var centiseconds:int = (timeElapsed % 1000) / 10; // 1x10^-2 seconds.
+			var leadingZeroSeconds:String;
+			var leadingZeroCentiseconds:String;
+			var timeString:String;
+			
+			if (seconds < 10)
+				leadingZeroSeconds = "0";
+			else
+				leadingZeroSeconds = "";
+			
+			if (centiseconds < 10)
+				leadingZeroCentiseconds = "0";
+			else
+				leadingZeroCentiseconds = "";
+			
+			// Structure 00.00.
+			timeString = (leadingZeroSeconds + seconds + "." + leadingZeroCentiseconds + centiseconds);				
 		}
 
 		//--------------------------------------
@@ -80,45 +90,14 @@
 		//--------------------------------------
 		public function Run(e:Event):void 
 		{
-			// Update dimensions - where actual gameplay takes place.
 			darkDimension.Update();
+			//darkDimension.visible = false;
 			lightDimension.Update();
+			//TimeElapsed();
 			
-			// Update timer.
-			// timer.Update();
-		}
-		
-		//--------------------------------------
-		//  Event handlers
-		//--------------------------------------
-		/* Once the level has been loaded key presses are no longer ignored,
-		 * it locks focus to the stage so that keyboard interactions are detected and
-		 * the main loop is added as an event listener so it updates every frame.
-		 * The chapter containing the set of levels is notified that the level has been loaded.
-		 */
-		protected function OnLevelLoaded(e:Event):void 
-		{
-			/*
-			fadeTweener.removeEventListener(FadeTweener.TWEEN_COMPLETE, OnLevelLoaded);
-			player.ignoreKeys = false;
-			stage.focus = stage;
-			addEventListener(Event.ENTER_FRAME, Run);
-			parent.dispatchEvent(new Event(LEVEL_LOADED));*/
-		}
-		
-		/* Once the level is complete the destructors are called and event listeners are removed.
-		 * In addition to this, the complete flag is set to true which destroys components and 
-		 * triggers the loading of the next level (if there is one).
-		 */
-		protected function OnLevelComplete(e:Event):void 
-		{	
-			/*
-			complete = true;
-			removeEventListener(Event.ENTER_FRAME, Run);
-			fadeTweener.removeEventListener(FadeTweener.TWEEN_COMPLETE, OnLevelComplete);
-			parent.dispatchEvent(new Event(LEVEL_COMPLETE));
-			player.Destroy();
-			Destroy();*/
-		}		
+			// Conditions for level completion.
+			if (lightDimension.reachedGoal && darkDimension.reachedGoal)
+				trace("LEVEL COMPLETE!");
+		}	
 	}
 }

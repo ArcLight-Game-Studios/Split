@@ -56,15 +56,17 @@
 			
 			currentState = newState;
 			
+			trace("\n- - - State switched - - -\n");
+			
 			switch(currentState) 
 			{
 				case States.MAIN_MENU:
-					trace("\nMAIN MENU\n----------------------------");
+					trace("--------------------\nMAIN MENU\n--------------------");
 					addChild(mainMenu);
 				break;
 				
 				case States.PLAY:
-					trace("\nPLAY\n----------------------------");
+					trace("--------------------\nPLAY\n--------------------");
 					addChild(levelManifest);
 				break;
 			}
