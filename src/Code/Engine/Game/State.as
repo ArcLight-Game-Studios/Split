@@ -8,9 +8,10 @@ package Code.Engine.Game
     //  Class description
     //--------------------------------------	
 	/**
-	 * Storage class for the various game states.	
+	 * Placeholder for state classes.
 	 * 
 	 * @see States class
+	 * @see MainMenu class
 	 * 
 	 * @author Mark W. Thompson
 	 */
@@ -42,33 +43,11 @@ package Code.Engine.Game
 		//--------------------------------------
 		//  Public methods
 		//--------------------------------------
-		public function Enable():void 
+		public function SwitchMode():void
 		{
-			mouseChildren = true;
-			mouseEnabled = true;
-			visible = true;
-			trace("State enabled");			
-		}
-		
-		public function Disable():void 
-		{
-			mouseChildren = false;
-			mouseEnabled = false;
-			visible = false;
-			trace("State disabled.");
-		}
-		
-		//--------------------------------------
-		//  Event handlers
-		//--------------------------------------
-		/* Once the level has been loaded key presses are no longer ignored,
-		 * it locks focus to the stage so that keyboard interactions are detected and
-		 * the main loop is added as an event listener so it updates every frame.
-		 * The chapter containing the set of levels is notified that the level has been loaded.
-		 */
-		protected function OnceLoaded(e:Event):void 
-		{
-			trace("State loaded.");
+			mouseChildren = !mouseChildren;
+			mouseEnabled = !mouseEnabled;
+			visible = !visible;
 		}
 	}
 }

@@ -14,7 +14,7 @@
     //--------------------------------------	
 	/**
 	 * Contains both light and dark dimensions.
-	 * Keeps time and victory conditions.
+	 * Most over-arching gameplay logic resides in this class.
 	 * 
 	 * @author Mark W. Thompson
 	 */

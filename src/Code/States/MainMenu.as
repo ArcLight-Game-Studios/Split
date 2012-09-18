@@ -11,7 +11,8 @@ package Code.States
     //  Class description
     //--------------------------------------	
 	/**
-	 * Main menu.
+	 * The main menu for Split.
+	 * Links to the play state.
 	 * 
 	 * @see State class
 	 * 
@@ -38,7 +39,7 @@ package Code.States
 		public function Initialise(e:Event):void 
 		{
 			playButton = getChildByName("playButton") as PlayButton;
-			playButton.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDown);
+			playButton.addEventListener(MouseEvent.MOUSE_DOWN, OnPlayButtonDown);
 			
 			trace("Main menu initialised.");
 			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
@@ -47,7 +48,7 @@ package Code.States
 		//--------------------------------------
 		//  Event handlers
 		//--------------------------------------
-		public function OnMouseDown(e:MouseEvent):void 
+		public function OnPlayButtonDown(e:MouseEvent):void 
 		{
 			trace("Play button pressed.");
 			main.SwitchState(States.PLAY);

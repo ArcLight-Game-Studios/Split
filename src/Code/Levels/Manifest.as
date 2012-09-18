@@ -8,7 +8,8 @@ package Code.Levels
     //  Class description
     //--------------------------------------	
 	/**
-	 * The Manifest class creates, stores, handles and displays the game levels.
+	 * Creates, stores, handles and displays the levels of Split.
+	 * These levels can be modified in the Split Flash Professional file.
 	 * 
 	 * @author Mark W. Thompson
 	 */

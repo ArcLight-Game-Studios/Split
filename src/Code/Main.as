@@ -10,7 +10,7 @@
     //  Class description
     //--------------------------------------	
 	/**
-	 * Main is the main entry point of the program (the document class).
+	 * Document class (main entry point of the program).
 	 * Creates, stores, handles and displays the game states.
 	 * 
 	 * @see States class

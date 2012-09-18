@@ -14,7 +14,7 @@ package Code.Engine.Objects
 	 * Base class for player controlled objects.
 	 * Provides basic functionality for multi-directional movement,
 	 * collision detection, collision handling, and the application of gravity.
-	 * This class is to be extended to provide full functionality.
+	 * This class is to be extended to provide necessary/desired/full functionality.
 	 * 
 	 * @see States class
 	 * 

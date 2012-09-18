@@ -13,8 +13,8 @@
     //  Class description
     //--------------------------------------	
 	/**
-	 * The CollisionDetector class is essentially a utility class which
-	 * is used to determine if a set of collision bounds are colliding with a given set of objects.
+	 * A utility class which is used to determine if a set of 
+	 * collision bounds are colliding with an array of objects.
 	 * 
 	 * @see CollisionBound class
 	 * 
@@ -26,7 +26,7 @@
 		//  Properties
 		//--------------------------------------
 		public static const COLLISION_DETECTED:String = "collisionDetected";
-		private var count:int = 0;
+		private var collisionDetected:Boolean = false;
 		
 		//--------------------------------------
 		//  Public methods
@@ -41,26 +41,35 @@
 		 */
 		public function Check(collisionBounds:Array, objects:Array):void 
 		{	
+			// Cycles through the set of collision bounds.
 			for (var j:int = 0; j < collisionBounds.length; j++)
 			{
 				var collisionBound:CollisionBound = collisionBounds[j];
-				count = 0; // Resets on each cycle.
-
+				collisionDetected = false; 
+				
+				// Cycles through the array of objects.
 				for (var i:int = 0; i < objects.length; i++) 
 				{
+					// Checks if the current collision bound is colliding with the current object.
 					if (collisionBound.hitTestObject(objects[i])) 
 					{
+						// References the parent object (player) and dimension.
 						var parentObject:DisplayObject = collisionBound.parent;
 						var dimension:DisplayObject = collisionBound.parent.parent;
+						
+						// Sets collision bound data which will be used in the handling function of the Player class.
 						collisionBound.hit = true;
 						collisionBound.objectBounds = objects[i].getBounds(dimension);
-						count++;
+						
+						// Triggers collision handler in Player class.
 						parentObject.dispatchEvent(new Event(COLLISION_DETECTED));
+						
+						collisionDetected = true;
 						break;
 					}
 				}
 				
-				if (count == 0)
+				if (!collisionDetected)
 					collisionBound.hit = false;
 			}
 		}

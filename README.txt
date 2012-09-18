@@ -7,11 +7,12 @@ Peeter Pärna, Stefan Harrison.
 
 
 //--------------------------------------
-//  Todo list
+//  Priority based feature list
 //--------------------------------------
-Mirror fragments? If so, 2 per dimension.
+Modify/edit scrolling system to sort out bugs.
+Additional states - gameover / restart / credits / options?
 Platform types.
-Modify scrolling system.
-Angry Birds level select system.
-Gameover/restart screen (additional states).
-GRAPHICS!!!
+HUD.
+Angry Birds styled level select system.
+Sprites to replace placeholder graphics.
+Mirror fragments? If so, 2 per dimension.

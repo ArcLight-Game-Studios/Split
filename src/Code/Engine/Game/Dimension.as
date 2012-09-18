@@ -14,10 +14,11 @@
     //  Class description
     //--------------------------------------	
 	/**
-	 * Dimension class.
-	 * Contains player, objects and defines dimension properties - gravity, height (scroll).
+	 * Contains player controlled character, objects.
+	 * This class should be a child of the Level class.
 	 * 
 	 * @see States class
+	 * @see Level class
 	 * 
 	 * @author Mark W. Thompson
 	 */
@@ -61,7 +62,7 @@
 			else if (type == DARK)
 				dimensionContent = level.darkDimension;
 			
-			camera = new Camera(this, player);
+			camera = new Camera(this);
 				
 			ConfigureDimensionContent();
 			
@@ -113,7 +114,7 @@
 					if (object is Player) 
 					{
 						player = object as Player;
-						player.removeChildAt(0); // Removes placeholder image.
+						player.removeChildAt(0); // Removes spawn point placeholder image.
 						player.mouseChildren = false;
 						player.mouseEnabled = false;
 					} 
