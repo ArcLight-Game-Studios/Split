@@ -1,5 +1,8 @@
-2nd build now up!
+//--------------------------------------
+//  ArcLight Game Studios
+//--------------------------------------
+Ewan McGregor, Graeme Grier, 
+Kemal Thomson, Mark Thompson, 
+Peeter Pärna, Stefan Harrison.
 
-Fixed problems with player movement and collision, if you notice anything else make a note of telling me.
-Created a simple level with platforms. 
-Next steps: implement a timer and a goal.
+Please view the "README.txt" for more information.
