@@ -8,6 +8,7 @@
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 	import Code.Engine.Game.Dimension;
+	import flash.display.Shape;
 	
 	//--------------------------------------
     //  Class description
@@ -29,7 +30,7 @@
 		public var lightDimension:Dimension;
 		private var levelContent:Sprite;
 		public var complete:Boolean = false;
-
+		
 		//--------------------------------------
 		//  Constructor
 		//--------------------------------------
@@ -93,7 +94,7 @@
 			darkDimension.Update();
 			//darkDimension.visible = false;
 			lightDimension.Update();
-			//TimeElapsed();
+			//TimeElapsed();		
 			
 			// Conditions for level completion.
 			if (lightDimension.reachedGoal && darkDimension.reachedGoal)

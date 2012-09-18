@@ -9,7 +9,6 @@ Peeter Pärna, Stefan Harrison.
 //--------------------------------------
 //  Priority based feature list
 //--------------------------------------
-Modify/edit scrolling system to sort out bugs.
 Additional states - gameover / restart / credits / options?
 Platform types.
 HUD.

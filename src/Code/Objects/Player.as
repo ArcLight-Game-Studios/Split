@@ -399,7 +399,15 @@
 				isFacingRight = true;
 			}
 		}
-
+		
+		//--------------------------------------
+		//  Getters and setters
+		//--------------------------------------
+		public function GetYVelocity():int
+		{
+			return yVelocity;
+		}
+		
 		//--------------------------------------
 		//  Event handlers
 		//--------------------------------------

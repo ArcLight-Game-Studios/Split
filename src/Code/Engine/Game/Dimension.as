@@ -63,6 +63,7 @@
 				dimensionContent = level.darkDimension;
 			
 			camera = new Camera(this);
+			
 				
 			ConfigureDimensionContent();
 			
@@ -76,7 +77,7 @@
 		public function Update():void 
 		{
 			player.Update();
-			camera.Follow(player);
+			camera.Follow(player, player.GetYVelocity());
 			collisionDetector.Check(player.collisionBounds, collisionArray);
 			
 			// Game logic.
@@ -133,6 +134,7 @@
 					}
 				}
 			}
+			camera.Focus(player);
 		}
 	}
 }
