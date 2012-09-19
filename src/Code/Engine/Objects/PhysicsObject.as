@@ -6,6 +6,7 @@ package Code.Engine.Objects
 	import flash.geom.Point;
 	import Code.Engine.CollisionDetection.CollisionBound;
 	import Code.Engine.CollisionDetection.CollisionDetector;
+	import Code.Engine.Utils.Utility;
 	
 	//--------------------------------------
     //  Class description
@@ -41,6 +42,8 @@ package Code.Engine.Objects
 		public var leftBound:CollisionBound;
 		public var rightBound:CollisionBound;
 		public var collisionBounds:Array;
+		/* Object */
+		protected var spawn:Point;
 
 		//--------------------------------------
 		//  Constructor
@@ -80,7 +83,7 @@ package Code.Engine.Objects
 		//  Protected methods
 		//--------------------------------------
 		protected function UpdatePosition():void 
-		{
+		{		
 			x += xVelocity;
 			y -= yVelocity;
 		}

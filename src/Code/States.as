@@ -17,6 +17,7 @@ package Code
 		//--------------------------------------
 		public static const INITIAL:int = 0;
 		public static const MAIN_MENU:int = 1;
-		public static const PLAY:int = 2;
+		public static const CREDITS:int = 2;
+		public static const PLAY:int = 3;
 	}
 }

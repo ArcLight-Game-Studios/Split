@@ -5,6 +5,8 @@
 	import flash.events.Event;
 	import Code.States;
 	import Code.States.MainMenu;
+	import Code.States.Credits;
+	import Code.Engine.Utils.Utility;
 
 	//--------------------------------------
     //  Class description
@@ -24,6 +26,7 @@
 		//--------------------------------------
 		public var currentState:int = States.INITIAL;
 		private const mainMenu:MainMenu = new MainMenuState();
+		private const credits:Credits = new CreditsState();
 		private const levelManifest:Manifest = new Manifest();
 
 		//--------------------------------------
@@ -31,6 +34,10 @@
 		//--------------------------------------
 		public function Main() 
 		{
+			// Set the Utility.
+			Utility.stage = this.stage;
+			Utility.main = this;
+			
 			trace("Main script now running.");
 			addEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
@@ -63,6 +70,11 @@
 				case States.MAIN_MENU:
 					trace("--------------------\nMAIN MENU\n--------------------");
 					addChild(mainMenu);
+				break;
+				
+				case States.CREDITS:
+					trace("--------------------\nCREDITS\n--------------------");
+					addChild(credits);
 				break;
 				
 				case States.PLAY:

@@ -10,25 +10,24 @@ package Code.States
     //  Class description
     //--------------------------------------	
 	/**
-	 * The main menu for Split.
-	 * Links to the play state.
+	 * The credits of Split.
+	 * Links to the main menu state.
 	 * 
 	 * @see State class
 	 * 
 	 * @author Mark W. Thompson
 	 */
-	public class MainMenu extends State
+	public class Credits extends State
 	{
 		//--------------------------------------
 		//  Properties
 		//--------------------------------------
-		private var playButton:SimpleButton;
-		private var creditsButton:SimpleButton;
+		private var backButton:SimpleButton;
 		
 		//--------------------------------------
 		//  Constructor
 		//--------------------------------------
-		public function MainMenu() 
+		public function Credits() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
@@ -37,33 +36,22 @@ package Code.States
 		//  Initialiser
 		//--------------------------------------
 		public function Initialise(e:Event):void 
-		{
-			// Set up play button.
-			playButton = getChildByName("playButton") as SimpleButton;
-			playButton.addEventListener(MouseEvent.MOUSE_DOWN, OnPlayButtonDown);
-			
+		{		
 			// Set up credits button.
+			backButton = getChildByName("backButton") as SimpleButton;
+			backButton.addEventListener(MouseEvent.MOUSE_DOWN, OnBackButtonDown);
 			
-			creditsButton = getChildByName("creditsButton") as SimpleButton;
-			creditsButton.addEventListener(MouseEvent.MOUSE_DOWN, OnCreditsButtonDown);
-			
-			trace("Main menu initialised.");
+			trace("Credits initialised.");
 			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
 		
-		//--------------------------------------
+			//--------------------------------------
 		//  Event handlers
 		//--------------------------------------
-		public function OnPlayButtonDown(e:MouseEvent):void 
+		public function OnBackButtonDown(e:MouseEvent):void 
 		{
-			trace("Play button pressed.");
-			main.SwitchState(States.PLAY);
-		}
-		
-		private function OnCreditsButtonDown(e:MouseEvent):void
-		{
-			trace("Credits button pressed.");
-			main.SwitchState(States.CREDITS);
+			trace("Back button pressed.");
+			main.SwitchState(States.MAIN_MENU);
 		}
 	}
 }

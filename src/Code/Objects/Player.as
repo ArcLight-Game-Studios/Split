@@ -31,7 +31,6 @@
 		public var ignoreKeys:Boolean = false;
 		//private const MAX_HORIZONTAL_OVERLAP:int = 4;
 		//private const MAX_VERTICAL_OVERLAP:int = 2;
-		private var spawn:Point;
 		
 		private var currentAnimation:MovieClip = null;
 		private var idle:MovieClip = new PlayerIdle();
@@ -165,9 +164,11 @@
 			{
 				if (bottomBound.hit)
 				{					
-					if (!jumping)
+					if (!jumping && !onGround)
 					{
+						// ******************************************************************************
 						// !!!!!!!!!! NEEDS TO BE CORRECTED !!!!!!!!!! (Improve accuracy of assumption.)
+						// ******************************************************************************
 						if ((y < bottomBound.objectBounds.y) && ((y+height)<(bottomBound.objectBounds.y+bottomBound.objectBounds.height)))
 						{
 

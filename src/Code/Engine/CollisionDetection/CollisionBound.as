@@ -29,7 +29,7 @@
 		private var origin:Point;
 		private var target:Point;
 		private const THICKNESS:Number = 0.1;
-		private const ALPHA:Number = 1;
+		private const ALPHA:Number = 0;
 		private const COLOUR:uint = 0xFF0000;
 		/* Collision data */
 		public var objectBounds:Rectangle = new Rectangle();
