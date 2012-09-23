@@ -1,13 +1,11 @@
-﻿package Code.Engine.CollisionDetection 
+﻿package arclight.split.collision 
 {
 	import flash.display.MovieClip;
 	import flash.display.Stage;
 	import flash.events.EventDispatcher;
 	import flash.events.Event;
 	import flash.display.DisplayObject;
-	import Code.Engine.Game.Level;
-	import Code.Objects.Player;
-	import Code.Engine.CollisionDetection.CollisionBound;
+	import arclight.split.collision.CollisionBound;
 	
 	//--------------------------------------
     //  Class description
@@ -18,7 +16,7 @@
 	 * 
 	 * @see CollisionBound class
 	 * 
-	 * @author Mark W. Thompson
+	 * @author Mark Thompson
 	 */
 	public class CollisionDetector extends EventDispatcher
 	{
@@ -30,31 +28,27 @@
 		
 		//--------------------------------------
 		//  Public methods
-		//--------------------------------------		
-		 /**
+		//--------------------------------------	
+		/**
 		 * Cycles through an array of collision bounds and determines if there are any collisions between
 		 * one of the collision bounds and one of the objects in the objects array. 
-		 * If there is an event will be dispatched to the parent class of the collision bounds.
+		 * If there is an event will be dispatched to the parent class of the collision bounds. 
 		 * 
-		 * @param collisionBounds An array of CollisionBounds (this should be converted to Vector type).
-		 * @param objects An array of various object types.
+		 * @param	collisionBounds An array of CollisionBounds (this should be converted to Vector type).
+		 * @param	objects An array of various object types.
 		 */
 		public function Check(collisionBounds:Array, objects:Array):void 
 		{	
 			// Cycles through the set of collision bounds.
-			for (var j:int = 0; j < collisionBounds.length; j++)
-			{
+			for (var j:int = 0; j < collisionBounds.length; j++) {
 				var collisionBound:CollisionBound = collisionBounds[j];
 				collisionDetected = false; 
-				
 				// Cycles through the array of objects.
-				for (var i:int = 0; i < objects.length; i++) 
-				{
+				for (var i:int = 0; i < objects.length; i++) {
 					// Checks if the current collision bound is colliding with the current object.
-					if (collisionBound.hitTestObject(objects[i])) 
-					{
-						// References the parent object (player) and dimension.
-						var parentObject:DisplayObject = collisionBound.parent;
+					if (collisionBound.hitTestObject(objects[i])) {
+						// References the player and dimension.
+						var player:DisplayObject = collisionBound.parent;
 						var dimension:DisplayObject = collisionBound.parent.parent;
 						
 						// Sets collision bound data which will be used in the handling function of the Player class.
@@ -62,15 +56,16 @@
 						collisionBound.objectBounds = objects[i].getBounds(dimension);
 						
 						// Triggers collision handler in Player class.
-						parentObject.dispatchEvent(new Event(COLLISION_DETECTED));
+						player.dispatchEvent(new Event(COLLISION_DETECTED));
 						
 						collisionDetected = true;
 						break;
 					}
 				}
 				
-				if (!collisionDetected)
+				if (!collisionDetected) {
 					collisionBound.hit = false;
+				}
 			}
 		}
 	}

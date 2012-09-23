@@ -1,21 +1,23 @@
-package Code.Engine.Game 
+package arclight.split.containers 
 {
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import arclight.split.TopLevel;
 	
 	//--------------------------------------
     //  Class description
     //--------------------------------------	
 	/**
-	 * Placeholder for state classes.
+	 * Container for state classes.
 	 * 
-	 * @see States class
 	 * @see MainMenu class
+	 * @see Credits class
+	 * @see Game class
 	 * 
-	 * @author Mark W. Thompson
+	 * @author Mark Thompson
 	 */
-	public class State extends MovieClip 
+	public class State extends Sprite
 	{
 		//--------------------------------------
 		//  Properties
@@ -27,17 +29,23 @@ package Code.Engine.Game
 		//--------------------------------------
 		public function State() 
 		{
-			addEventListener(Event.ADDED_TO_STAGE, Initialise);
+			if (TopLevel.stage) {
+				Initialise();
+			} else {
+				addEventListener(Event.ADDED_TO_STAGE, Initialise);
+			}			
 		}
-
+		
 		//--------------------------------------
 		//  Initialiser
 		//--------------------------------------
-		private function Initialise(e:Event):void 
+		private function Initialise(event:Event = null):void 
 		{
+			if (event) {
+				removeEventListener(Event.ADDED_TO_STAGE, Initialise);
+			}
 			main = root as MovieClip;
 			trace("State initialised.");
-			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
 		
 		//--------------------------------------

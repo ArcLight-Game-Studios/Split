@@ -1,10 +1,11 @@
-package Code.States
+package arclight.split.states
 {
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import Code.Engine.Game.State;
-	import Code.States;
+	import arclight.split.States;
+	import arclight.split.containers.State;
+	import arclight.split.TopLevel;
 	
 	//--------------------------------------
     //  Class description
@@ -15,7 +16,7 @@ package Code.States
 	 * 
 	 * @see State class
 	 * 
-	 * @author Mark W. Thompson
+	 * @author Mark Thompson
 	 */
 	public class Credits extends State
 	{
@@ -29,26 +30,32 @@ package Code.States
 		//--------------------------------------
 		public function Credits() 
 		{
-			addEventListener(Event.ADDED_TO_STAGE, Initialise);
+			if (TopLevel.stage) {
+				Initialise();
+			} else {
+				addEventListener(Event.ADDED_TO_STAGE, Initialise);
+			}
 		}
 		
 		//--------------------------------------
 		//  Initialiser
 		//--------------------------------------
-		public function Initialise(e:Event):void 
+		public function Initialise(event:Event = null):void 
 		{		
+			if (event) {
+				removeEventListener(Event.ADDED_TO_STAGE, Initialise);
+			}
 			// Set up credits button.
 			backButton = getChildByName("backButton") as SimpleButton;
 			backButton.addEventListener(MouseEvent.MOUSE_DOWN, OnBackButtonDown);
 			
 			trace("Credits initialised.");
-			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
 		
-			//--------------------------------------
+		//--------------------------------------
 		//  Event handlers
 		//--------------------------------------
-		public function OnBackButtonDown(e:MouseEvent):void 
+		public function OnBackButtonDown(mouseEvent:MouseEvent):void 
 		{
 			trace("Back button pressed.");
 			main.SwitchState(States.MAIN_MENU);

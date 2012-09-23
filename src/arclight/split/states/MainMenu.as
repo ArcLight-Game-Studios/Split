@@ -1,10 +1,11 @@
-package Code.States
+﻿package arclight.split.states
 {
 	import flash.display.SimpleButton;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import Code.Engine.Game.State;
-	import Code.States;
+	import arclight.split.States;
+	import arclight.split.containers.State;
+	import arclight.split.TopLevel;
 	
 	//--------------------------------------
     //  Class description
@@ -15,7 +16,7 @@ package Code.States
 	 * 
 	 * @see State class
 	 * 
-	 * @author Mark W. Thompson
+	 * @author Mark Thompson
 	 */
 	public class MainMenu extends State
 	{
@@ -28,27 +29,31 @@ package Code.States
 		//--------------------------------------
 		//  Constructor
 		//--------------------------------------
-		public function MainMenu() 
-		{
-			addEventListener(Event.ADDED_TO_STAGE, Initialise);
+		public function MainMenu() {
+			if (TopLevel.stage) {
+				Initialise();
+			} else {
+				addEventListener(Event.ADDED_TO_STAGE, Initialise);
+			}
 		}
 		
 		//--------------------------------------
 		//  Initialiser
 		//--------------------------------------
-		public function Initialise(e:Event):void 
+		private function Initialise(event:Event = null):void 
 		{
+			if (event) {
+				removeEventListener(Event.ADDED_TO_STAGE, Initialise);
+			}
 			// Set up play button.
 			playButton = getChildByName("playButton") as SimpleButton;
 			playButton.addEventListener(MouseEvent.MOUSE_DOWN, OnPlayButtonDown);
 			
 			// Set up credits button.
-			
 			creditsButton = getChildByName("creditsButton") as SimpleButton;
 			creditsButton.addEventListener(MouseEvent.MOUSE_DOWN, OnCreditsButtonDown);
 			
 			trace("Main menu initialised.");
-			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
 		
 		//--------------------------------------
@@ -57,7 +62,7 @@ package Code.States
 		public function OnPlayButtonDown(e:MouseEvent):void 
 		{
 			trace("Play button pressed.");
-			main.SwitchState(States.PLAY);
+			main.SwitchState(States.GAME);
 		}
 		
 		private function OnCreditsButtonDown(e:MouseEvent):void

@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'19/09/2012'</value>
+      <value>'23/09/2012'</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
@@ -28,7 +28,7 @@
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\Mark\Desktop\Coding\AS3\Projects\AGS\Split\src\Code\Main.as</path-element>
+    <path-element>C:\Users\Mark\Desktop\Coding\AS3\Projects\AGS\Split\src\arclight\split\Main.as</path-element>
   </file-specs>
   <default-background-color>#808080</default-background-color>
   <default-frame-rate>30</default-frame-rate>

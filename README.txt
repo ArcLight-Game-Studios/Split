@@ -8,19 +8,13 @@ Stefan Harrison.
 
 
 //--------------------------------------
-//  Bugs
-//--------------------------------------
-Collision bug - need to improve accuracy of approximating when to trigger the bottom bound collision (highlighted in Player class).
-
-
-//--------------------------------------
 //  Priority based feature list
 //--------------------------------------
 Platform types.
 Music system.
 Angry Birds styled level select system.
 Sprites to replace placeholder graphics.
-Quick restart (R key).
+Quick restart (r key).
 Local save system.
 
 
@@ -30,15 +24,15 @@ Local save system.
 Mirror fragments?
 Eventual time limt?
 Pause menu? Or Esc -> Level select -> Back -> Main menu?
-Control revision. Also seperate control scheme?
+Control revision.
 Chapters? If so music for each level or chapter?
 
 
 //--------------------------------------
 //  Notes
 //--------------------------------------
-Platform types:
-Stun, bounce, frictionless, "sonic" / ledge, moving, hazardous, sensor.
+Platform types: stun, bounce, frictionless, "sonic" / ledge, moving, hazardous, sensor.
+
 
 //--------------------------------------
 //  Legal

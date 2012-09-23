@@ -1,12 +1,12 @@
-﻿package Code 
+﻿package arclight.split 
 {
-	import Code.Levels.Manifest;
 	import flash.display.MovieClip;
 	import flash.events.Event;
-	import Code.States;
-	import Code.States.MainMenu;
-	import Code.States.Credits;
-	import Code.Engine.Utils.Utility;
+	import arclight.split.States;
+	import arclight.split.states.MainMenu;
+	import arclight.split.states.Credits;
+	import arclight.split.states.Game;
+	import arclight.split.TopLevel;
 
 	//--------------------------------------
     //  Class description
@@ -17,9 +17,9 @@
 	 * 
 	 * @see States class
 	 * 
-	 * @author Mark W. Thompson
+	 * @author Mark Thompson
 	 */
-	public class Main extends MovieClip 
+	public class Main extends TopLevel 
 	{
 		//--------------------------------------
 		//  Properties
@@ -27,28 +27,30 @@
 		public var currentState:int = States.INITIAL;
 		private const mainMenu:MainMenu = new MainMenuState();
 		private const credits:Credits = new CreditsState();
-		private const levelManifest:Manifest = new Manifest();
+		private var game:Game;
 
 		//--------------------------------------
 		//  Constructor
 		//--------------------------------------
 		public function Main() 
-		{
-			// Set the Utility.
-			Utility.stage = this.stage;
-			Utility.main = this;
-			
+		{			
 			trace("Main script now running.");
-			addEventListener(Event.ADDED_TO_STAGE, Initialise);
+			if (TopLevel.stage) {
+				Initialise();
+			} else {
+				addEventListener(Event.ADDED_TO_STAGE, Initialise);
+			}
 		}
 
 		//--------------------------------------
 		//  Initialiser
 		//--------------------------------------
-		private function Initialise(e:Event):void 
-		{			
+		private function Initialise(event:Event = null):void 
+		{	
+			if (event) {
+				removeEventListener(Event.ADDED_TO_STAGE, Initialise);
+			}
 			SwitchState(States.MAIN_MENU);
-			removeEventListener(Event.ADDED_TO_STAGE, Initialise);
 		}
 		
 		//--------------------------------------
@@ -56,8 +58,7 @@
 		//--------------------------------------
 		public function SwitchState(newState:int):void 
 		{
-			if (currentState != States.INITIAL) 
-			{
+			if (currentState != States.INITIAL) {
 				removeChildAt(numChildren - 1);
 			}
 			
@@ -65,8 +66,7 @@
 			
 			trace("\n- - - State switched - - -\n");
 			
-			switch(currentState) 
-			{
+			switch(currentState) {
 				case States.MAIN_MENU:
 					trace("--------------------\nMAIN MENU\n--------------------");
 					addChild(mainMenu);
@@ -77,9 +77,9 @@
 					addChild(credits);
 				break;
 				
-				case States.PLAY:
-					trace("--------------------\nPLAY\n--------------------");
-					addChild(levelManifest);
+				case States.GAME:
+					trace("--------------------\nGAME\n--------------------");
+					game = new Game(2);
 				break;
 			}
 		}
