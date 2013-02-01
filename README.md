@@ -1,8 +1,8 @@
-ArcLight Game Studios
----------------------
+Split
+-----
 This project is unfinished and has been delayed indefinitely due to lack of interest. 
 
-Developed by Ewan McGregor, Graeme Grier, Jaime Cross, Kemal Thomson, Mark Thompson, Peeter Pärna, Stefan Harrison over two semesters for the Abertay Game Development Society (GDS).
+Developed over two semesters for the Abertay Game Development Society (GDS) by ArcLight Game Studios: Ewan McGregor, Graeme Grier, Jaime Cross, Kemal Thomson, Mark Thompson, Peeter Pärna, Stefan Harrison.
 
 
 Todo
