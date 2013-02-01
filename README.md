@@ -1,35 +1,29 @@
 ArcLight Game Studios
-=====================
-Ewan McGregor, Graeme Grier, 
-Jaime Cross, Kemal Thomson, 
-Mark Thompson, Peeter Pärna,
-Stefan Harrison.
+---------------------
+This project is unfinished and has been delayed indefinitely due to lack of interest. 
+
+Developed by Ewan McGregor, Graeme Grier, Jaime Cross, Kemal Thomson, Mark Thompson, Peeter Pärna, Stefan Harrison over two semesters for the Abertay Game Development Society (GDS).
 
 
-Priority based feature list
-===========================
-Platform types.
-Music system.
-Angry Birds styled level select system.
-Sprites to replace placeholder graphics.
-Quick restart (r key).
-Local save system.
+Todo
+----
+- Implement platforms
+- Music system
+- Level select system similar to that of Angry Birds
+- Replace placeholder graphics
+- Local save system
 
 
-Design
-======
-Mirror fragments?
-Eventual time limt?
-Pause menu? Or Esc -> Level select -> Back -> Main menu?
-Control revision.
-Chapters? If so music for each level or chapter?
-
-
-Notes
-=====
-Platform types: stun, bounce, frictionless, "sonic" / ledge, moving, hazardous, sensor.
+Discussion
+----------
+- Mirror fragments
+- Eventual time limt
+- Pause menu
+- Control revision
+- Chapters
+- Platform types (stun, bounce, frictionless, "sonic" / ledge, moving, hazardous, sensor)
 
 
 Legal
-=====
+-----
 Copyright © The University of Abertay Dundee, DD1 1HG. The University of Abertay Dundee is a charity registered in Scotland, No. SC016040.
